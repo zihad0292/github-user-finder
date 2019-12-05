@@ -1,50 +1,46 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
+import GithubContext from "../../context/github/githubContext";
 
-class Search extends Component {
-  state = {
-    username: ""
+const Search = ({ setAlert, onSearch }) => {
+  const githubContext = useContext(GithubContext);
+  const [username, setUsername] = useState("");
+
+  const onChange = e => {
+    setUsername(e.target.value);
   };
 
-  static propTypes = {
-    onSearch: PropTypes.func.isRequired,
-    setAlert: PropTypes.func.isRequired
-  };
-
-  onChange = e => {
-    this.setState({ username: e.target.value });
-  };
-
-  onSubmit(e) {
+  const onSubmit = e => {
     e.preventDefault();
 
-    if (this.state.username === "") {
-      this.props.setAlert("Please enter something", "light");
+    if (username === "") {
+      setAlert("Please enter something", "light");
     } else {
-      this.props.onSearch(this.state.username);
-      // this.setState({ username: "" });
+      githubContext.onSearch(username);
     }
-  }
+  };
 
-  render() {
-    return (
-      <form className='form' onSubmit={this.onSubmit}>
-        <input
-          type='text'
-          name='username'
-          placeholder='Search Users...'
-          value={this.state.username}
-          onChange={this.onChange}
-        />
-        <input
-          type='submit'
-          className='btn btn-dark btn-block'
-          value='Search'
-          onClick={this.onSubmit.bind(this)}
-        />
-      </form>
-    );
-  }
-}
+  return (
+    <form className='form' onSubmit={onSubmit}>
+      <input
+        type='text'
+        name='username'
+        placeholder='Search Users...'
+        value={username}
+        onChange={onChange}
+      />
+      <input
+        type='submit'
+        className='btn btn-dark btn-block'
+        value='Search'
+        onClick={onSubmit}
+      />
+    </form>
+  );
+};
+
+Search.propTypes = {
+  setAlert: PropTypes.func.isRequired
+};
 
 export default Search;
