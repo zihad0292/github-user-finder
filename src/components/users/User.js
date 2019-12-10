@@ -8,7 +8,7 @@ import GithubContext from "../../context/github/githubContext";
 const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
 
-  const { user, getUser, getUserRepos, repos, loading } = githubContext;
+  const { user, getUser, getUserRepos, loading } = githubContext;
 
   useEffect(() => {
     getUser(match.params.username);
@@ -105,7 +105,7 @@ const User = ({ match }) => {
         <div className='badge badge-info'>Public Repos: {public_repos}</div>
         <div className='badge badge-dark'>Public Gists: {public_gists}</div>
       </div>
-      <Repos repos={repos} />
+      <Repos />
     </Fragment>
   );
 };
