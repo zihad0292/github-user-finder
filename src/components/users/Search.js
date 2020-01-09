@@ -11,7 +11,7 @@ const Search = () => {
   const onChange = e => {
     setUsername(e.target.value);
   };
-
+  
   const onSubmit = e => {
     e.preventDefault();
 
@@ -22,12 +22,14 @@ const Search = () => {
     }
   };
 
+  const searchText = githubContext.query !== '' ? githubContext.query : "Search Users..."
+  
   return (
     <form className='form' onSubmit={onSubmit}>
       <input
         type='text'
         name='username'
-        placeholder='Search Users...'
+        placeholder={searchText}
         value={username}
         onChange={onChange}
       />

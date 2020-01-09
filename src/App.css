@@ -412,3 +412,20 @@ table th {
     justify-content: center;
   }
 }
+
+/* CSS added by Zihad */
+body{
+  min-height: 100vh;
+  position: relative;
+}
+
+.container{
+  padding-bottom: 100px;
+}
+
+footer{
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}

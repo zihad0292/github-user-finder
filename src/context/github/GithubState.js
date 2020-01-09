@@ -3,10 +3,11 @@ import axios from "axios";
 import GithubContext from "./githubContext";
 import GithubReducer from "./githubReducer";
 
-import { SEARCH_USERS, SET_LOADING, GET_USER, GET_REPOS } from "../types";
+import { SEARCH_USERS, SET_LOADING, GET_USER, GET_REPOS, SET_QUERY } from "../types";
 
 const GithubState = props => {
   const initialState = {
+    query:'',
     users: [],
     user: {},
     repos: [],
@@ -24,6 +25,10 @@ const GithubState = props => {
     dispatch({
       type: SEARCH_USERS,
       payload: res.data.items
+    });
+    dispatch({
+      type: SET_QUERY,
+      payload: username
     });
   };
 
@@ -61,6 +66,7 @@ const GithubState = props => {
         user: state.user,
         repos: state.repos,
         loading: state.loading,
+        query: state.query,
         onSearch,
         getUser,
         getUserRepos
