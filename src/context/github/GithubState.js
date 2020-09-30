@@ -3,56 +3,63 @@ import axios from "axios";
 import GithubContext from "./githubContext";
 import GithubReducer from "./githubReducer";
 
-import { SEARCH_USERS, SET_LOADING, GET_USER, GET_REPOS, SET_QUERY } from "../types";
+import {
+  SEARCH_USERS,
+  SET_LOADING,
+  GET_USER,
+  GET_REPOS,
+  SET_QUERY,
+} from "../types";
 
-const GithubState = props => {
+const GithubState = (props) => {
   const initialState = {
-    query:'',
+    query: "",
     users: [],
     user: {},
     repos: [],
-    loading: false
+    loading: false,
   };
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   // Search Users
-  const onSearch = async username => {
+  const onSearch = async (username) => {
     setLoading();
     const res = await axios.get(
       `https://api.github.com/search/users?q=${username}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
     dispatch({
       type: SEARCH_USERS,
-      payload: res.data.items
+      payload: res.data.items,
     });
     dispatch({
       type: SET_QUERY,
-      payload: username
+      payload: username,
     });
   };
 
   // Get User
-  const getUser = async username => {
+  const getUser = async (username) => {
     setLoading();
     const res = await axios.get(
       `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
+
     dispatch({
       type: GET_USER,
-      payload: res.data
+      payload: res.data,
     });
   };
 
   // Get Repos
-  const getUserRepos = async username => {
+  const getUserRepos = async (username) => {
     setLoading();
     const res = await axios.get(
       `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
     dispatch({
       type: GET_REPOS,
-      payload: res.data
+      payload: res.data,
     });
   };
 
@@ -69,7 +76,7 @@ const GithubState = props => {
         query: state.query,
         onSearch,
         getUser,
-        getUserRepos
+        getUserRepos,
       }}
     >
       {props.children}
